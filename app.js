@@ -2,18 +2,17 @@
 
 const express = require("express");
 const app = express();
+app.use(express.static("public"));
+
 const port = process.env.PORT_NO || 3000;
 
-//premier middleware
-app.use((req, res, next) => {
-  console.log(
-    `premier middleware : ${req.method} ${req.url} - ${req.get("User-Agent")}`
-  );
-  next();
-});
+// EJS
+app.set("views", "./views");
+app.set("view engine", "ejs");
 
-app.get("/bonjour", (req, res) => {
-  res.send("Hello World!");
+//premier middleware
+app.get("/", (req, res) => {
+  res.render("index", { message: "Hello World" });
 });
 
 app.use((req, res, next) => {
