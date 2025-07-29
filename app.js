@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 
 //premier middleware
 app.get("/", (req, res) => {
-  res.render("index", { message: "Hello World" });
+  res.render("liste-tickets", { message: "Hello World" });
 });
 
 app.use((req, res, next) => {
