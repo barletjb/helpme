@@ -5,21 +5,21 @@ const Role = Object.freeze({
 
 let users = [
    {
-      id: 1,
+      _id: 1,
       username: 'formateur',
       name: 'formateur',
       password: process.env.PWD_FORMATEUR || 'Pa$$w0rd',
       role: Role.ROLE_FORMATEUR,
    },
    {
-      id: 2,
+      _id: 2,
       username: 'alice',
       password: 'alice',
       name: 'Alice',
       role: Role.ROLE_APPRENANT,
    },
    {
-      id: 3,
+      _id: 3,
       username: 'bob',
       password: 'bob',
       name: 'Bob',
@@ -29,7 +29,7 @@ let users = [
 let idx = 4;
 
 const findUserById = (id) => {
-   return users.find((user) => user.id == id);
+   return users.find((user) => user._id == id);
 };
 
 const findUserByUsernameAndPassword = (username, password) => {
@@ -40,7 +40,7 @@ const findUserByUsernameAndPassword = (username, password) => {
 };
 
 const deleteUser = (id) => {
-   users = users.filter((user) => user.id != id);
+   users = users.filter((user) => user._id != id);
 };
 
 module.exports = {

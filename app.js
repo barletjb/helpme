@@ -30,6 +30,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 let ticketsRoutes = require('./routes/ticketsRoutes');
 let usersRoutes = require('./routes/usersRoutes');
 
+// Page d'erreur 404 
+app.use(function (req, res, next) {
+   res.status(404).render("erreur", {
+      session: req.session,
+     titre: '404',
+     message:
+         "L'univers est vaste, trop vaste. La ressource demandée n'a pas été trouvée. ",
+     }
+   );
+ });
+
+ app.use(function (err, req, res, next) {
+   console.log("Erreur : " + err.message);
+   res.status(500).render("erreur", {
+      session: req.session,
+     titre: '500',
+     message:
+         "Une erreur inattendue est survenue.",
+     }
+   );
+ });
+
+
 const port = process.env.PORT_NO || 3000;
 
 app.listen(port, () => {

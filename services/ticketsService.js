@@ -2,25 +2,25 @@ const { EtatTicket } = require('../bo/Ticket');
 
 let tickets = [
    {
-      id: 1,
+      _id: 1,
       titre: 'Ticket 1',
-      auteur: { id: 2, name: 'Alice' },
+      auteur: { _id: 2, name: 'Alice', role: 1 },
       description: 'Description du ticket 1',
       creation: new Date('2025-06-07T15:30:00Z'),
       etat: EtatTicket.OUVERT,
    },
    {
-      id: 2,
+      _id: 2,
       titre: 'Ticket 2',
-      auteur: { id: 3, name: 'Bob' },
+      auteur: { _id: 3, name: 'Bob', role: 1 },
       description: 'Description du ticket 2',
       creation: new Date('2025-06-07T15:35:00Z'),
       etat: EtatTicket.CLOS,
    },
    {
-      id: 3,
+      _id: 3,
       titre: 'Ticket 3',
-      auteur: { id: 3, name: 'Bob' },
+      auteur: { _id: 3, name: 'Bob', role: 1 },
       description: 'Description du ticket 3',
       creation: new Date('2025-06-08T15:05:00Z'),
       etat: EtatTicket.OUVERT,
@@ -35,7 +35,7 @@ exports.removeAllTickets = () => {
 
 exports.setTickets = (newTickets) => {
    tickets = newTickets;
-   idx = tickets[tickets.length - 1].id + 1;
+   idx = tickets[tickets.length - 1]._id + 1;
 };
 
 exports.findTickets = (filtreEtat = EtatTicket.TOUS, tri = 'asc') => {
@@ -53,19 +53,19 @@ exports.findTickets = (filtreEtat = EtatTicket.TOUS, tri = 'asc') => {
 };
 
 exports.findTicketById = (id) => {
-   let ticket = tickets.find((ticket) => ticket.id == id);
+   let ticket = tickets.find((ticket) => ticket._id == id);
 
-   return { ...ticket }; //shallow copy de ticket
+   return { ...ticket }; //shallow copy
 };
 
 exports.deleteTicket = (id) => {
-   tickets = tickets.filter((ticket) => ticket.id != id);
+   tickets = tickets.filter((ticket) => ticket._id != id);
 };
 
 exports.addTicket = (titre, auteur, description) => {
    const creation = Date.now();
    const newTicket = {
-      id: idx++,
+      _id: idx++,
       titre,
       auteur,
       description,
@@ -76,15 +76,15 @@ exports.addTicket = (titre, auteur, description) => {
    return newTicket;
 };
 
-exports.updateTicket = (id, titre, auteur, description, etat) => {
-   let index = tickets.findIndex((ticket) => ticket.id == id);
+exports.updateTicket = (id, titre,  description, etat) => {
+   let index = tickets.findIndex((ticket) => ticket._id == id);
 
    tickets[index] = {
-      id: id,
+      _id: id,
       titre,
-      auteur,
+      auteur: tickets[index].auteur,
       description,
       creation: tickets[index].creation,
-      etat: etat,
+      etat: etat!=undefined?etat:tickets[index].etat,
    };
 };
